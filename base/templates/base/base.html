@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block pageTitle %}{% endblock pageTitle %}</title>
+    <link rel="stylesheet" href=" {% static "base/bootstrap/css/bootstrap.css" %} ">
+	<link rel="stylesheet" href="{% static "base/css/mystyle.css" %}">
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-warning">
+			<div class="container">
+			  <a class="navbar-brand" href="#">FinApp</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				<ul class="navbar-nav  mb-2 mb-lg-0">
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{% url "home" %}">Home</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="">About</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="#">Contact</a>
+				  </li>
+				  {% if request.user.is_authenticated %}
+				  <li class="nav-item">
+					<a class="nav-link" href="#">{{ request.user.username }}</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="#">Nofitication</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="{% url "signOut" %}">Logout</a>
+				  </li>
+				  {% else %}
+				  <li class="nav-item">
+					<a class="nav-link" href="{% url "signIn" %}">Login</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="#">Register</a>
+				  </li>
+				  {% endif %}
+				  {% if request.user.is_superuser %}
+				  <li class="nav-item">
+					<a class="nav-link" href="{% url "admin_dashboard" %}">Dashboard</a>
+				  </li>
+				  {% else %}
+				  <li class="nav-item">
+					<a class="nav-link" href="{% url "client_dashboard" %}">Dashboard</a>
+				  </li>
+				  {% endif %}
+				</ul>
+			  </div>
+			</div>
+		  </nav>
+	</header>
+
+	<main>
+		{% if messages %}
+				{% for message in messages %}
+					{% if message.tags == 'error' %}
+					<li class="alert alert-danger text-center list-unstyled">{{ message }}</li>
+					{% elif message.tags == 'success' %}
+					<li class="alert alert-success text-center list-unstyled">{{ message }}</li>
+					{% endif %}
+				{% endfor %}
+		{% endif %}
+	</main>
+
+    
+    {% block content %}
+	
+	{% endblock content %}
+
+	<footer class='bg-warning p-4'>
+		<div class="container text-center bg-warning py-g">
+			<p>FinApp &copy All right reserverd</p>
+			<p>Designed by Alphy</p>
+		</div>
+	</footer>
+
+    <script src="{% static "base/bootstrap/js/bootstrap.js" %}"></script>
+</body>
+</html>

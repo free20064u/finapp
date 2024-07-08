@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+{% block pageTitle %}Account Type | FinApp{% endblock pageTitle %}
+
+{% block content %}
+<main class="container">
+    <div class="row justify-content-start">
+        <p class="display-6 text-center">Account Type</p>
+        <div class="col-4 mt-2 mb-5 px-2 py-3">
+            {% include "bank/admin_menu.html" %}
+        </div>
+        <div class="col-4 mt-2 mb-5 px-2 py-3 ">
+            <h1 class="h5 mb-1">Create Account Type</h1>
+            <form action="" method="post" class="p-3 border border-info rounded-3">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            {{ form.accTypeName.label_tag }}
+                            {{ form.accTypeName }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-4">
+                    <button class="btn btn-info">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
