@@ -7,9 +7,9 @@ from bank.models import AccType
 
 
 class TransferForm(forms.Form):
-    client = forms.ModelChoiceField( queryset=CustomUser.objects.all())
-    reciepient = forms.ModelChoiceField( queryset=CustomUser.objects.all())
-    amount = forms.DecimalField(decimal_places=2)
+    reciepient = forms.CharField( label='Reciepient', widget= forms.TextInput(attrs={'class': 'form-control', 'placeholder':'12345'}))
+    amount = forms.DecimalField(decimal_places=2, widget= forms.TextInput(attrs={'class': 'form-control', 'placeholder':'0.00'}))
+
 
 
 

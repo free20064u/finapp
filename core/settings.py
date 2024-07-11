@@ -127,9 +127,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LIVERELOAD_HOST = '192.168.43.181'
-LIVERELOAD_PORT = '8001'
+
 
 LOGIN_URL = 'signIn'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+LIVERELOAD_HOST = '192.168.43.180'
+LIVERELOAD_PORT = '37452'

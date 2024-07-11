@@ -5,13 +5,13 @@
 <main class="container">
     <div class="row justify-content-start">
         <p class="display-6 text-center">Profile</p>
-        <div class="col-4 mt-2 mb-5 px-2 py-3">
-            {% include "bank/user_menu.html" %}
+        <div class="col-12 col-md-4 mt-2 mb-5 px-2 py-3">
+            {% include "bank/menu.html" %}
         </div>
-        <div class="col-8 mt-2 mb-5 px-2 py-3 ">
+        <div class="col-12 col-md-8 mt-2 mb-5 px-2 py-3 ">
             <h1 class="h5 mb-1">Profile</h1>
             <div class="row ps-3">
-                <div class="col-6 ">
+                <div class="col-12 col-md-6 ">
                     <div class="row p-2">
                         <div class="col-5 bg-dark text-white p-2 border border-dark rounded-start">First Name </div>
                         <div class="col-6 p-2 border rounded-end border-dark">{{ request.user.first_name | title }} </div>
@@ -29,7 +29,7 @@
                         <div class="col-6 p-2 border rounded-end border-dark">{{ request.user.email | title }} </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="row p-2">
                         <div class="col-5 bg-dark text-white p-2 border border-dark rounded-start">Account No </div>
                         <div class="col-6 p-2 border rounded-end border-dark">{{ request.user.username | title }} </div>

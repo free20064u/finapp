@@ -6,11 +6,11 @@
 
 <main class="container my-5">
     <div class="row my-4 align-items-center" height=>
-		<div class="col-8">
+		<div class="col-12 col-md-8">
 			<h1 class="display-5">Welcome to FinApp Bank</h1>
 			<p class="h5">We serve you better</p>
 		</div>
-		<div class="col-4 my-5 px-2 py-3 border border-info rounded-3">
+		<div class="col-12 col-md-4  my-5 py-3 px-md-2 px-3 border border-info rounded-3">
             <h2 class="h2 mb-4">Enter Account Details</h2>
             <form action="{% url "signIn" %}" method="post">
                 {% csrf_token %}
