@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block pageTitle %}{% endblock pageTitle %}</title>
     <link rel="stylesheet" href=" {% static "base/bootstrap/css/bootstrap.css" %} ">
-	<link rel="stylesheet" href="{% static "base/css/mystyle.css" %}">
-</head>
-<body>
+    <link rel="stylesheet" href=" {% static "base/scss/custom.css" %} ">
+	</head>
+<body class='body-bg'>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-warning">
 			<div class="container">
+				{% if request.user.is_authenticated  %}
+				<button class="btn btn-dark  d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+					MENU
+				</button>
+				{% endif %}
+				
 			  <a class="navbar-brand" href="#">FinApp</a>
 			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -53,8 +59,7 @@
 				  <li class="nav-item">
 					<a class="nav-link" href="#">Register</a>
 				  </li>
-				  {% endif %}
-				  
+				  {% endif %} 
 				</ul>
 			  </div>
 			</div>
@@ -85,6 +90,6 @@
 		</div>
 	</footer>
 
-    <script src="{% static "base/bootstrap/js/bootstrap.js" %}"></script>
+    <script src="{% static "base/bootstrap/js/bootstrap.bundle.js" %}"></script>
 </body>
 </html>
