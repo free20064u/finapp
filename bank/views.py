@@ -21,7 +21,7 @@ def transferView(request):
     }
     if request.method == 'POST':
         if True:
-            alert = 'Transfer cannot be undertaken outside of the United Kingdom'
+            alert = 'Your account has been temporarily suspended.'
             messages.error(request, 'Transfer declined.')
             return render(request, 'bank/alert.html', {'alert':alert})
         
