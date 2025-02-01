@@ -10,5 +10,8 @@ class AccType(models.Model):
 
 
 
-
+class Enquiry(models.Model):
+    title = models.CharField(max_length=255, null=True, blank=True)
+    message = models.TextField()
+    sender = models.EmailField()
 

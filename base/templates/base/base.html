@@ -7,8 +7,10 @@
     <title>{% block pageTitle %}{% endblock pageTitle %}</title>
     <link rel="stylesheet" href=" {% static "base/bootstrap/css/bootstrap.css" %} ">
     <link rel="stylesheet" href=" {% static "base/scss/custom.css" %} ">
-	</head>
-<body class='body-bg'>
+	<link rel="stylesheet" href="{% static "base/css/mystyle.css" %}">
+	<link rel="shortcut icon" href="{% static "base/images/favicon.ico" %}" type="image/x-icon">
+</head>
+<body class='mybg'>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-warning">
 			<div class="container">
@@ -17,8 +19,8 @@
 					MENU
 				</button>
 				{% endif %}
-				
-			  <a class="navbar-brand" href="#">FinApp</a>
+				<img src="{% static "base/images/metrologo.png" %}" alt="" width="40px">
+			  <a class="navbar-brand" href="#">ETRO BANK</a>
 			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			  </button>
@@ -28,10 +30,10 @@
 					<a class="nav-link active" aria-current="page" href="{% url "home" %}">Home</a>
 				  </li>
 				  <li class="nav-item">
-					<a class="nav-link" href="">About</a>
+					<a class="nav-link" href="{% url "about" %}">About</a>
 				  </li>
 				  <li class="nav-item">
-					<a class="nav-link" href="#">Contact</a>
+					<a class="nav-link" href="{% url "contact" %}">Contact</a>
 				  </li>
 				  {% if request.user.is_authenticated %}
 				  <li class="nav-item">
@@ -77,19 +79,17 @@
 				{% endfor %}
 		{% endif %}
 	</main>
-
-    
+   
     {% block content %}
 	
 	{% endblock content %}
 
 	<footer class='bg-warning p-4'>
 		<div class="container text-center bg-warning py-g">
-			<p>FinApp &copy All right reserverd</p>
-			<p>Designed by Alphy</p>
+			<p>Metro Bank &copy All right reserverd</p>
+			<p>Designed by webdev</p>
 		</div>
 	</footer>
-
     <script src="{% static "base/bootstrap/js/bootstrap.bundle.js" %}"></script>
 </body>
 </html>

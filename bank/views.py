@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from accounts.forms import UserLoginForm
 from accounts.models import CustomUser, Transaction
-from .forms import AccountTypeForm
+from .forms import AccountTypeForm, EnquiryForm
 from accounts.forms import TransactionForm, TransferForm
 from .models import AccType
 
@@ -20,6 +20,11 @@ def transferView(request):
         'form': form,
     }
     if request.method == 'POST':
+        if True:
+            alert = 'Transfer cannot be undertaken outside of the United Kingdom'
+            messages.error(request, 'Transfer declined.')
+            return render(request, 'bank/alert.html', {'alert':alert})
+        
         form = TransferForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['reciepient']
@@ -65,7 +70,8 @@ def clientProfileView(request):
 
 @login_required
 def depositeView(request, id=None):   
-    form = TransactionForm(initial={'user':request.user , 'updatedBy':request.user})
+    form = TransactionForm(initial={'user':CustomUser.objects.get(id=id), 'updatedBy':request.user})
+
     context = {
         'form': form,
     }
@@ -88,7 +94,7 @@ def depositeView(request, id=None):
 
 @login_required
 def withdrawalView(request, id=None):
-    form = TransactionForm(initial={'user':request.user , 'updatedBy':request.user, 'activity':'withdrawal'})
+    form = TransactionForm(initial={'user':CustomUser.objects.get(id=id), 'updatedBy':request.user, 'activity':'withdrawal'})
     context = {
         'form': form,
     }
@@ -143,6 +149,9 @@ def home(request):
     }
     return render(request, 'bank/index.html', context)
 
+def about(request):
+    return render(request, 'bank/about.html')
+
 
 def clientsView(request):
     clients = CustomUser.objects.all()
@@ -155,7 +164,7 @@ def clientsView(request):
 @login_required
 def clientDashboardView(request):
 
-    transactions = Transaction.objects.filter(user_id=request.user.id).order_by('-id')
+    transactions = Transaction.objects.filter(user_id=request.user.id).order_by('-id')[:5]
     context = {
         'transactions':transactions,
     }
@@ -169,3 +178,27 @@ def adminDashboardView(request):
         'clients': clients,
     }
     return render(request, 'bank/admin_dashboard.html', context)
+
+
+def contactView(request):
+    form = EnquiryForm()
+    if request.method == 'POST':
+        form = EnquiryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Message submited')
+            return redirect('client_dashboard')
+        else:
+            messages.error(request, 'Message not submited')
+            return render(request, 'bank/contact.html', {'form':form}) 
+    else:
+        return render(request, 'bank/contact.html', {'form':form})
+    
+def clientDetailView(request, id=None):
+    transactions = Transaction.objects.filter(user_id=id).order_by('-id')[:5]
+    clientID = id
+    context = {
+        'transactions':transactions,
+        'clientID':clientID,
+    }
+    return render(request, 'bank/clientDetail.html' , context)

@@ -4,7 +4,7 @@
 
 {% block content %}
     <main class="container mb-5">
-        <h1 class="text-center display-6 pt-4">Dashboard</h1>
+        <!--<h1 class="text-center display-6 pt-4">Dashboard</h1>-->
         <div class="row">
             <div class="col-12 col-md-4 mt-md-2 mb-md-5 px-md-2 py-md-3">
                 {% include "bank/menu.html" %}
@@ -15,14 +15,14 @@
                         <div class="card-title h6 text-secondary pt-2">Current Balance:</div>
                         <p class="text-success">GHC {{ request.user.currentBalance }} </p>
                     </div>
-                    <div class="card col-4 col-md-3 my-4 border-info">
+                    <!--<div class="card col-4 col-md-3 my-4 border-info">
                         <div class="card-title h6 text-secondary pt-2">Current Balance:</div>
                         <p class="text-success">GHC 2000.00</p>
                     </div>
                     <div class="card col-4 col-md-3 my-4 border-info">
                         <div class="card-title h6 text-secondary pt-2">Current Balance:</div>
                         <p class="text-success">GHC 2000.00</p>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="row justify-content-between">
                     <h5 class="h5 text-center text-secondary my-3">Rescent Transactions</h5>
@@ -32,8 +32,8 @@
                                 <th scope="col" class="bg-dark text-white">#</th>
                                 <th scope="col" class="bg-dark text-white">Date</th>
                                 <th scope="col" class="bg-dark text-white">Time</th>
+                                <th scope="col" class="bg-dark text-white">Amount</th>
                                 <th scope="col" class="bg-dark text-white">Activity</th>
-                                <th scope="col" class="bg-dark text-white">Updated By</th>
                             </tr>
                         </thead>
                         <tbody >

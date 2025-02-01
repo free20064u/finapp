@@ -18,11 +18,12 @@ class TransactionForm(ModelForm):
     activity = forms.CharField(label='',initial='deposit',widget= forms.HiddenInput())
     updatedBy = forms.ModelChoiceField(label='', queryset=CustomUser.objects.all(),widget= forms.HiddenInput())
     user = forms.ModelChoiceField(label='', queryset=CustomUser.objects.all(), widget= forms.HiddenInput())
+    date = forms.DateField(label='', widget=forms.DateInput(attrs={'class':'form-control','type':'date'}))
 
     
     class Meta:
         model = Transaction
-        fields = ['activity', 'amount', 'updatedBy', 'user']
+        fields = ['activity', 'amount', 'updatedBy', 'user', 'date']
 
 
 class UserLoginForm(ModelForm):

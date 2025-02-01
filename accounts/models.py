@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
 
 
 class Transaction(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     time = models.TimeField(auto_now_add=True)
     activity = models.CharField(max_length=100, null=True, blank=True)
     amount = models.DecimalField(max_digits=100,decimal_places=2,default=0.00)

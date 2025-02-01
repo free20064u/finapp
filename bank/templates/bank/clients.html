@@ -20,6 +20,7 @@
                                 <th scope="col" class="bg-dark text-white">Middle Name</th>
                                 <th scope="col" class="bg-dark text-white">Last Name</th>
                                 <th scope="col" class="bg-dark text-white">Account Number</th>
+                                <th scope="col" class="bg-dark text-white">Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,6 +31,7 @@
                                 <td scope="col">{{ client.middle_name }}</td>
                                 <td scope="col">{{ client.last_name }}</td>
                                 <td scope="col">{{ client.username }}</td>
+                                <td scope="col"><a href="{% url "client_details" client.id %}">Details</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
