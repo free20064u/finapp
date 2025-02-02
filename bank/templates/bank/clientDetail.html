@@ -10,10 +10,15 @@
                 {% include "bank/menu.html" %}
             </div>
             <div class="col-12 col-md-8">
+                <div class="row justify-content-end">
+                    <div class="col-2">
+                        <img src="{{ client.image.url }}" alt="user image" class="img-fluid rounded-circle mt-3">
+                    </div>
+                </div>
                 <div class="row justify-content-between">
                     <div class="card col-4 col-md-3 my-4 border-info ">
                         <div class="card-title h6 text-secondary pt-2">Current Balance:</div>
-                        <p class="text-success">GHC {{ request.user.currentBalance }} </p>
+                        <p class="text-success">GHC {{ client.currentBalance }} </p>
                     </div>
                     <div class="card col-4 col-md-3 my-4 border-info">
                         <a href="{% url "deposite" clientID %}"><div class="card-title h6 text-secondary pt-2">Action</div>
@@ -22,6 +27,11 @@
                     <div class="card col-4 col-md-3 my-4 border-info">
                         <a href="{% url "withdrawal" clientID %}"><div class="card-title h6 text-secondary pt-2">Action</div>
                         <p class="text-success">Withdrawal</p></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <a href="{% url "edit_client" client.id %}"><button class="btn btn-warning">Edit client</button></a>
                     </div>
                 </div>
                 <div class="row justify-content-between">

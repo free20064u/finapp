@@ -20,36 +20,36 @@ def transferView(request):
         'form': form,
     }
     if request.method == 'POST':
-        if True:
+        if not request.user.is_superuser:
             alert = 'Your account has been temporarily suspended.'
             messages.error(request, 'Transfer declined.')
             return render(request, 'bank/alert.html', {'alert':alert})
-        
-        form = TransferForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['reciepient']
-            amount = form.cleaned_data['amount']
-            reciepient = CustomUser.objects.get(username=username)
-            
-            print(request.user.currentBalance)
-            print(reciepient.id)
-
-            if request.user.currentBalance >= Decimal(amount):
-                request.user.currentBalance = request.user.currentBalance - Decimal(amount)
-                request.user.save()
-                Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=request.user)
-
-                reciepient.currentBalance = reciepient.currentBalance + Decimal(amount)
-                reciepient.save()
-                Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=reciepient)
-
-                return render(request, 'bank/transfer.html',context)
-            else:
-                messages.error(request, 'Your account balance is insufficient')
-                return render(request, 'bank/transfer.html',context)
         else:
-            messages.error(request, 'Form not correctly filled')
-            return render(request, 'bank/transfer.html',context)
+            form = TransferForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['reciepient']
+                amount = form.cleaned_data['amount']
+                reciepient = CustomUser.objects.get(username=username)
+                
+                print(request.user.currentBalance)
+                print(reciepient.id)
+
+                if request.user.currentBalance >= Decimal(amount):
+                    request.user.currentBalance = request.user.currentBalance - Decimal(amount)
+                    request.user.save()
+                    Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=request.user)
+
+                    reciepient.currentBalance = reciepient.currentBalance + Decimal(amount)
+                    reciepient.save()
+                    Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=reciepient)
+
+                    return render(request, 'bank/transfer.html',context)
+                else:
+                    messages.error(request, 'Your account balance is insufficient')
+                    return render(request, 'bank/transfer.html',context)
+            else:
+                messages.error(request, 'Form not correctly filled')
+                return render(request, 'bank/transfer.html',context)
     else:
         return render(request, 'bank/transfer.html',context)
 
@@ -199,6 +199,8 @@ def clientDetailView(request, id=None):
     clientID = id
     context = {
         'transactions':transactions,
+        'client':CustomUser.objects.get(id=id),
         'clientID':clientID,
     }
     return render(request, 'bank/clientDetail.html' , context)
+

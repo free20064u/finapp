@@ -16,6 +16,6 @@ urlpatterns = [
     path('transfer/', views.transferView, name='transfer'),
     path('about/', views.about, name='about'),
     path('contact/', views.contactView, name='contact'),
-
-    path('client_details/<int:id>/', views.clientDetailView, name='client_details')
+    path('client_details/<int:id>/', views.clientDetailView, name='client_details'),
+    
 ]

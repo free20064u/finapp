@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from imagekit.models import ProcessedImageField 
+from pilkit.processors import ResizeToFill
 
 from bank.models import AccType
 
@@ -10,6 +12,7 @@ class CustomUser(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     currentBalance = models.DecimalField(max_digits=100, decimal_places=2,default=0.00)
     accType = models.ForeignKey(AccType, on_delete=models.PROTECT,null=True, blank=True)
+    image = ProcessedImageField(blank=True, null=True,default='profile/metrologo.png', upload_to='profile',processors=[ResizeToFill(100, 100)],format='JPEG',options={'quality': 60})
 
 
 class Transaction(models.Model):

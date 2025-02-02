@@ -37,6 +37,7 @@ class UserLoginForm(ModelForm):
 
 
 class AdminUserRegisterForm(ModelForm):
+    image = forms.ImageField(label='Account holder image',widget= forms.FileInput(attrs={'class': 'form-control'}))
     username = forms.CharField(label='Account Number',widget= forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(label='First Name',widget= forms.TextInput(attrs={'class': 'form-control'}))
     middle_name = forms.CharField(label='Middle Name',widget= forms.TextInput(attrs={'class': 'form-control'}))
@@ -51,4 +52,23 @@ class AdminUserRegisterForm(ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'first_name', 'middle_name', 'last_name', 'birth_date', 'email','accType', 'password']
+        fields = ['image','username', 'first_name', 'middle_name', 'last_name', 'birth_date', 'email','accType', 'password']
+
+
+class AdminUserEditForm(ModelForm):
+    image = forms.ImageField(label='Account holder image',widget= forms.FileInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(label='Account Number',widget= forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label='First Name',widget= forms.TextInput(attrs={'class': 'form-control'}))
+    middle_name = forms.CharField(label='Middle Name',widget= forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label='Last Name',widget= forms.TextInput(attrs={'class': 'form-control'}))
+    #password = forms.CharField(label='Password',widget= forms.PasswordInput(attrs={'class': 'form-control'}))
+    #password2 = forms.CharField(label='Password',widget= forms.PasswordInput(attrs={'class': 'form-control'}))
+    email = forms.CharField(label='Email',widget= forms.EmailInput(attrs={'class': 'form-control'}))
+    birth_date = forms.DateField(label='Date Of Birth',widget= forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
+    accType = forms.ModelChoiceField(label='Type Of Account', queryset=AccType.objects.all(), initial={},widget= forms.Select(attrs={'class': 'form-control'}))
+
+
+
+    class Meta:
+        model = CustomUser
+        fields = ['image','username', 'first_name', 'middle_name', 'last_name', 'birth_date', 'email','accType']
