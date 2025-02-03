@@ -20,7 +20,7 @@ def transferView(request):
         'form': form,
     }
     if request.method == 'POST':
-        if not request.user.is_superuser:
+        if request.user.is_superuser:
             alert = 'Your account has been temporarily suspended.'
             messages.error(request, 'Transfer declined.')
             return render(request, 'bank/alert.html', {'alert':alert})
@@ -30,18 +30,19 @@ def transferView(request):
                 username = form.cleaned_data['reciepient']
                 amount = form.cleaned_data['amount']
                 reciepient = CustomUser.objects.get(username=username)
-                
+                date = form.cleaned_data['date']
+
                 print(request.user.currentBalance)
                 print(reciepient.id)
 
                 if request.user.currentBalance >= Decimal(amount):
                     request.user.currentBalance = request.user.currentBalance - Decimal(amount)
                     request.user.save()
-                    Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=request.user)
+                    Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=request.user, date=date)
 
                     reciepient.currentBalance = reciepient.currentBalance + Decimal(amount)
                     reciepient.save()
-                    Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=reciepient)
+                    Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=reciepient, date=date)
 
                     return render(request, 'bank/transfer.html',context)
                 else:
@@ -76,12 +77,13 @@ def depositeView(request, id=None):
         'form': form,
     }
     if request.method == "POST":
+        user = CustomUser.objects.get(id=id)
         form = TransactionForm(request.POST)
         if form.is_valid():
             trans = form.save(commit=False)
             trans.save()
-            request.user.currentBalance = request.user.currentBalance + trans.amount
-            request.user.save()
+            user.currentBalance = user.currentBalance + trans.amount
+            user.save()
             messages.success(request, 'Account credited successfully')
             form = TransactionForm()
             return render(request, 'bank/deposite.html', context)
@@ -100,11 +102,12 @@ def withdrawalView(request, id=None):
     }
     if request.method == "POST":
         form = TransactionForm(request.POST)
+        user = CustomUser.objects.get(id=id)
         if form.is_valid():
             trans = form.save(commit=False)
             trans.save()
-            request.user.currentBalance = request.user.currentBalance - trans.amount
-            request.user.save()
+            user.currentBalance = request.user.currentBalance - trans.amount
+            user.save()
             messages.success(request, 'Account debited successfully')
             form = TransactionForm()
             return render(request, 'bank/withdrawal.html', context)
@@ -167,6 +170,7 @@ def clientDashboardView(request):
     transactions = Transaction.objects.filter(user_id=request.user.id).order_by('-id')[:5]
     context = {
         'transactions':transactions,
+        'client': request.user,
     }
     return render(request, 'bank/user_dashboard.html', context)
 

@@ -1,6 +1,6 @@
 {% extends "base/base.html" %}
 
-{% block pageTitle %}FinApp | Dashboard {% endblock pageTitle %}
+{% block pageTitle %}etro | Dashboard {% endblock pageTitle %}
 
 {% block content %}
     <main class="container mb-5">
@@ -11,15 +11,16 @@
             </div>
             <div class="col-12 col-md-8">
                 <div class="row justify-content-between">
-                    <div class="card col-4 col-md-3 my-4 border-info ">
-                        <div class="card-title h6 text-secondary pt-2">Current Balance:</div>
-                        <p class="text-success">&#163; {{ request.user.currentBalance }} </p>
+                    <div class="card col-6 col-md-3 my-4 border-info ">
+                        <div class="card-title h6 text-secondary pt-2">Account No:</div>
+                        <p class="text-success"> {{ client.username }} </p>
+                        <div class="card-title h6 text-secondary">Current Balance:</div>
+                        <p class="text-success">&#163; {{ client.currentBalance }} </p>
+                    </div>
+                    <div class="card col-4 col-md-3 my-4 mybg d-block d-sm-none">
+                        <img src="{{ client.image.url }}" alt="" class="img-fluid rounded-circle">
                     </div>
                     <!--<div class="card col-4 col-md-3 my-4 border-info">
-                        <div class="card-title h6 text-secondary pt-2">Current Balance:</div>
-                        <p class="text-success">GHC 2000.00</p>
-                    </div>
-                    <div class="card col-4 col-md-3 my-4 border-info">
                         <div class="card-title h6 text-secondary pt-2">Current Balance:</div>
                         <p class="text-success">GHC 2000.00</p>
                     </div>-->
