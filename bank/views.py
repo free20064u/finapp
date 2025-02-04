@@ -99,7 +99,7 @@ def depositeView(request, id=None):
 
 @login_required
 def withdrawalView(request, id=None):
-    form = TransactionForm(initial={'user':CustomUser.objects.get(id=id), 'updatedBy':request.user, 'activity':'withdrawal'})
+    form = TransactionForm(initial={'user': CustomUser.objects.get(id=id), 'updatedBy': request.user, 'activity': 'withdrawal'})
     context = {
         'form': form,
     }
@@ -108,16 +108,21 @@ def withdrawalView(request, id=None):
         user = CustomUser.objects.get(id=id)
         if form.is_valid():
             trans = form.save(commit=False)
-            trans.save()
-            user.currentBalance = user.currentBalance - trans.amount
-            user.save()
-            messages.success(request, 'Account debited successfully')
-            form = TransactionForm()
-            return render(request, 'bank/withdrawal.html', context)
+            if user.currentBalance >= trans.amount:
+                trans.save()
+                user.currentBalance = user.currentBalance - trans.amount
+                user.save()
+                messages.success(request, 'Account debited successfully')
+                form = TransactionForm()
+                return render(request, 'bank/withdrawal.html', context)
+            else:
+                messages.error(request, 'Insufficient balance')
+                return render(request, 'bank/withdrawal.html', context)
         else:
-           context['form'] = form
-           messages.error(request, 'Account not debited.')
-           return render(request, 'bank/withdrawal.html', context)
+            context['form'] = form
+            messages.error(request, 'Account not debited.')
+            print(form.errors)  # Print form errors to debug
+            return render(request, 'bank/withdrawal.html', context)
     return render(request, 'bank/withdrawal.html', context)
 
 
