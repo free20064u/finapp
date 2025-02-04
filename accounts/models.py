@@ -10,7 +10,7 @@ from bank.models import AccType
 class CustomUser(AbstractUser):
     middle_name = models.CharField(max_length=255, default='')
     birth_date = models.DateField(null=True, blank=True)
-    currentBalance = models.DecimalField(max_digits=100, decimal_places=2,default=0.00)
+    currentBalance = models.DecimalField(max_digits=65, decimal_places=2,default=0.00)
     accType = models.ForeignKey(AccType, on_delete=models.PROTECT,null=True, blank=True)
     image = ProcessedImageField(blank=True, null=True,default='profile/metrologo.png', upload_to='profile',processors=[ResizeToFill(100, 100)],format='JPEG',options={'quality': 60})
 
@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
 class Transaction(models.Model):
     date = models.DateField()
     time = models.TimeField(auto_now_add=True)
-    activity = models.CharField(max_length=100, null=True, blank=True)
-    amount = models.DecimalField(max_digits=100,decimal_places=2,default=0.00)
-    updatedBy = models.CharField(max_length=100)
+    activity = models.CharField(max_length=60, null=True, blank=True)
+    amount = models.DecimalField(max_digits=65, decimal_places=2,default=0.00)
+    updatedBy = models.CharField(max_length=60)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=True, null=True)
