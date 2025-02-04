@@ -36,16 +36,17 @@ def adminRegisterView(request):
         'form': form,
     }
     if request.method == 'POST':
-        form = AdminUserRegisterForm(request.POST)
+        form = AdminUserRegisterForm(request.POST, request.FILES)  # Include request.FILES
         if form.is_valid():
             client = form.save(commit=False)
-            client.set_password(request.POST['password'])
+            client.set_password(form.cleaned_data['password'])  # Use cleaned_data to get the password
             client.save()
             messages.success(request,  'Client registered Successfully.')
             return redirect('clients')
         else:
             context['form'] = form
             messages.error(request, 'Client not registered.')
+            print(form.errors)  # Print form errors to debug
             return render(request, 'accounts/admin_register.html', context)
     else:  
         return render(request, 'accounts/admin_register.html', context)

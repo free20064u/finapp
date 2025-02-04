@@ -43,7 +43,7 @@ def transferView(request):
                     reciepient.currentBalance = reciepient.currentBalance + Decimal(amount)
                     reciepient.save()
                     Transaction.objects.create(amount=amount, activity='transfer', updatedBy=request.user, user=reciepient, date=date)
-
+                    messages.success(request, 'Transfer was successful')
                     return render(request, 'bank/transfer.html',context)
                 else:
                     messages.error(request, 'Your account balance is insufficient')
@@ -66,7 +66,10 @@ def statementView(request, id=None):
 
 @login_required
 def clientProfileView(request):
-    return render(request, 'bank/client_profile.html')
+    context = {
+        'client': request.user,  # Add the current user to the context
+    }
+    return render(request, 'bank/client_profile.html', context)
 
 
 @login_required
@@ -106,7 +109,7 @@ def withdrawalView(request, id=None):
         if form.is_valid():
             trans = form.save(commit=False)
             trans.save()
-            user.currentBalance = request.user.currentBalance - trans.amount
+            user.currentBalance = user.currentBalance - trans.amount
             user.save()
             messages.success(request, 'Account debited successfully')
             form = TransactionForm()

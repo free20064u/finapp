@@ -44,7 +44,7 @@ class AdminUserRegisterForm(ModelForm):
     middle_name = forms.CharField(label='Middle Name',widget= forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(label='Last Name',widget= forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Password',widget= forms.PasswordInput(attrs={'class': 'form-control'}))
-    #password2 = forms.CharField(label='Password',widget= forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Password confirm',widget= forms.PasswordInput(attrs={'class': 'form-control'}))
     email = forms.CharField(label='Email',widget= forms.EmailInput(attrs={'class': 'form-control'}))
     birth_date = forms.DateField(label='Date Of Birth',widget= forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
     accType = forms.ModelChoiceField(label='Type Of Account', queryset=AccType.objects.all(), initial={},widget= forms.Select(attrs={'class': 'form-control'}))
