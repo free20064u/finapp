@@ -135,7 +135,7 @@ def createAccountTypeView(request):
         form = AccountTypeForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Account type successfully created')
+            messages.success(request, 'Accounts type successfully created')
             return redirect('accountType')
         else:
             messages.error(request, 'Account type was not created')
