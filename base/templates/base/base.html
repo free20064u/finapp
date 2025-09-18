@@ -36,18 +36,7 @@
 					<a class="nav-link" href="{% url "contact" %}">Contact</a>
 				  </li>
 				  {% if request.user.is_authenticated %}
-				  <li class="nav-item">
-					<a class="nav-link" href="{% url "client_profile" %}">Hi {{ request.user.first_name|title }}</a>
-				  </li>
-				  <li class="nav-item">
-					<li class="nav-item">
-						<img src="{{request.user.image.url}}" alt="" class="img-fluid rounded-circle" width="40px">
-					  </li>
-				  </li>
-				  <li class="nav-item">
-					<a class="nav-link" href="{% url "signOut" %}">Logout</a>
-				</li>
-						{% if request.user.is_superuser %}
+				  		{% if request.user.is_superuser %}
 							<li class="nav-item">
 								<a class="nav-link" href="{% url "admin_dashboard" %}">Dashboard</a>
 							</li>
@@ -56,6 +45,19 @@
 								<a class="nav-link" href="{% url "client_dashboard" %}">Dashboard</a>
 							</li>
 						{% endif %}
+					<li class="nav-item">
+							<a class="nav-link" href="{% url "signOut" %}">Logout</a>
+					</li>
+				  <li class="nav-item">
+					<a class="nav-link" href="{% url "client_profile" %}">Hi {{ request.user.first_name|title }}</a>
+				  </li>
+				  <li class="nav-item">
+					<li class="nav-item">
+						<img src="{{request.user.image.url}}" alt="" class="img-fluid rounded-circle" width="40px">
+					  </li>
+				  </li>
+				  
+						
 				  
 				  {% else %}
 				  <li class="nav-item">

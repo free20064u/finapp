@@ -7,7 +7,7 @@ from bank.models import AccType
 
 
 class TransferForm(forms.Form):
-    reciepient = forms.CharField( label='Reciepient', widget= forms.TextInput(attrs={'class': 'form-control', 'placeholder':'12345'}))
+    recipient = forms.CharField( label='Recipient', widget= forms.TextInput(attrs={'class': 'form-control', 'placeholder':'12345'}))
     amount = forms.DecimalField(decimal_places=2, widget= forms.TextInput(attrs={'class': 'form-control', 'placeholder':'0.00'}))
     date = forms.DateField(label='', widget=forms.DateInput(attrs={'class':'form-control','type':'date'}))
 
@@ -17,6 +17,18 @@ class TransferForm(forms.Form):
 class TransactionForm(ModelForm):
     amount = forms.CharField(label='Amount',widget= forms.TextInput(attrs={'class': 'form-control', 'placeholder':'0.00'}))
     activity = forms.CharField(label='',initial='deposit',widget= forms.HiddenInput())
+    updatedBy = forms.ModelChoiceField(label='', queryset=CustomUser.objects.all(),widget= forms.HiddenInput())
+    user = forms.ModelChoiceField(label='', queryset=CustomUser.objects.all(), widget= forms.HiddenInput())
+    date = forms.DateField(label='', widget=forms.DateInput(attrs={'class':'form-control','type':'date'}))
+
+    
+    class Meta:
+        model = Transaction
+        fields = ['activity', 'amount', 'updatedBy', 'user', 'date']
+
+class TransactionWithdrawalForm(ModelForm):
+    amount = forms.CharField(label='Amount',widget= forms.TextInput(attrs={'class': 'form-control', 'placeholder':'0.00'}))
+    activity = forms.CharField(label='',initial='withdrawal',widget= forms.HiddenInput())
     updatedBy = forms.ModelChoiceField(label='', queryset=CustomUser.objects.all(),widget= forms.HiddenInput())
     user = forms.ModelChoiceField(label='', queryset=CustomUser.objects.all(), widget= forms.HiddenInput())
     date = forms.DateField(label='', widget=forms.DateInput(attrs={'class':'form-control','type':'date'}))
